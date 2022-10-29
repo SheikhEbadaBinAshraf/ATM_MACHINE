@@ -5,109 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ES6 Condition Checking With if else</title>
+    <!-- style -->
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>ES6 Condition Checking With if else</h1>
-    <hr />
+    <section class="navbar">
+      <div class="heading">
+        <h2>ATM Machine</h2>
+      </div>
+    </section>
 
-    <form onsubmit="checkPin(); return false">
-      <h3>WELCOME TO THE ATM MACHINE</h3>
+    <section class="mainPart">
+      <div class="leftSide">
+        <div class="heading">
+          <h1>Account Details</h1>
+        </div>
+        <div class="boxes">
+          <div class="box_1">
+            <h2>Money Box</h2>
+            <h1 class="monyBox">00</h1>
+          </div>
+          <div class="box_1">
+            <h2>card daily limit</h2>
+            <h1 class="dailyLimit">00</h1>
+          </div>
+          <div class="box_1">
+            <h2>Account Balance</h2>
+            <h1 class="aBalance">00</h1>
+          </div>
+        </div>
+      </div>
+      <div class="rightSide">
+        <div class="heading">
+          <h1>Welcome to the ATM Machine</h1>
+        </div>
 
-      Enter your Pin:
-      <input type="number" id="userInputPin" required />
-      <button>Confirm</button>
-    </form>
+        <div class="pin">
+          <form onsubmit="checkPin(); return false">
+            <label for="">Enter your Pin:</label>
+            <input type="number" id="userInputPin" required />
 
-    <h4 id="errorMessage"></h4>
-    <div id="homeScreen"></div>
-    <h4 id="message"></h4>
+            <div class="errorMessage"></div>
 
-    <ul style="display: none">
-      <li id="item1"></li>
-      <li id="item2"></li>
-      <li id="item3"></li>
-    </ul>
+            <button>Confirm</button>
+          </form>
+        </div>
 
-    <script>
-      let moneyBox = 22000; //ATM MACHINE MONEY BOX
-      let cardDailyLimit = 20000;
-      let accountBalance = 50000;
+        <div class="withdraw"></div>
 
-      function checkPin() {
-        console.log("I am checking pin");
+        <div class="errorMessage1"></div>
 
-        let userInputPin = document.querySelector("#userInputPin").value;
+        <div class="withdraw_successfully_part"></div>
+      </div>
+    </section>
 
-        if (userInputPin.length > 4) {
-          document.querySelector("#errorMessage").innerHTML =
-            "You Must Enter 4 Digit Pin Number";
-          return;
-        }
-
-        if (userInputPin.length < 4) {
-          document.querySelector("#errorMessage").innerHTML =
-            "You Must Enter 4 Digit Pin Number";
-          return;
-        }
-
-        if (userInputPin === "5112") {
-          document.querySelector("#errorMessage").innerHTML =
-            "Correct Pin Number 🙂";
-          document.querySelector("#homeScreen").innerHTML = `
-                        <form onsubmit="withdraw(); return false">
-                             <h3>WITHDRAW</h3>
-                             Enter your Amount to withdraw:
-                             <input type="number" id="userInputAmount" required />
-                             <button>withdraw</button>
-                             <h4><span style="color: red">Note:</span> Please Enter Amount Such like That: 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000 ...</h4>
-                        </form>`;
-          return;
-        }
-
-        if (userInputPin !== "5112") {
-          document.querySelector("#errorMessage").innerHTML =
-            "inCorrect Pin Number 😌";
-          return;
-        }
-      }
-
-      function withdraw() {
-        let amount = document.querySelector("#userInputAmount").value;
-
-        document.querySelector("#message").innerHTML =
-          "Successfully Withdraw 👍";
-
-        let liItem = (document.querySelector("ul").style.display = "block");
-
-        let moneyBoxCondition = moneyBox - Number(amount);
-
-        // money box
-        if (moneyBox > amount) {
-          let item1 = (document.querySelector("#item1").innerHTML =
-            "Remain Money Box Amount is: " + (moneyBox - Number(amount)));
-        } else {
-          let item1 = (document.querySelector("#item1").innerHTML =
-            "Money Box Limit is over");
-        }
-
-        // card daily limit
-        if (cardDailyLimit > amount) {
-          let item2 = (document.querySelector("#item2").innerHTML =
-            "Remain Card Daily Limit is: " + (cardDailyLimit - Number(amount)));
-        } else {
-          let item2 = (document.querySelector("#item2").innerHTML =
-            "Card Daily Limit is over");
-        }
-
-        // account balance
-        if (accountBalance > amount) {
-          let item3 = (document.querySelector("#item3").innerHTML =
-            "Remain Account Balance is: " + (accountBalance - Number(amount)));
-        } else {
-          let item3 = (document.querySelector("#item3").innerHTML =
-            "Account Balance limit is over ");
-        }
-      }
-    </script>
+    <script src="app.js"></script>
   </body>
 </html>

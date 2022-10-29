@@ -2,70 +2,101 @@ let moneyBox = 22000; //ATM MACHINE MONEY BOX
 let cardDailyLimit = 20000;
 let accountBalance = 50000;
 
-function checkPin() {
-  console.log("I am checking pin");
+document.querySelector(".monyBox").textContent = moneyBox;
+document.querySelector(".dailyLimit").textContent = cardDailyLimit;
+document.querySelector(".aBalance").textContent = accountBalance;
 
+function checkPin() {
   let userInputPin = document.querySelector("#userInputPin").value;
 
   if (userInputPin.length > 4) {
-    document.querySelector("#errorMessage").innerHTML =
-      "You Must Enter 4 Digit Pin Number";
+    document.querySelector(".errorMessage").innerHTML =
+      "<p>You Must Enter 4 Digit Pin Number</p>";
     return;
   }
 
   if (userInputPin.length < 4) {
-    document.querySelector("#errorMessage").innerHTML =
-      "You Must Enter 4 Digit Pin Number";
+    document.querySelector(".errorMessage").innerHTML =
+      "<p>You Must Enter 4 Digit Pin Number</p>";
     return;
   }
 
   if (userInputPin === "5112") {
-    document.querySelector("#errorMessage").innerHTML =
-      "Correct Pin Number 🙂";
-    document.querySelector("#homeScreen").innerHTML = `
-                  <form onsubmit="withdraw(); return false">
-                       <h3>WITHDRAW</h3>
-                       Enter your Amount to withdraw:
-                       <input type="number" id="userInputAmount" required />
-                       <button>withdraw</button>
-                       <h4><span style="color: red">Note:</span> Enter multiples of 5 like: 5, 10, 15, ...</h4>
-                  </form>`;
+    document.querySelector(".errorMessage").innerHTML =
+      "<p>Correct Pin Number 🙂</p>";
+
+    document.querySelector(".withdraw").innerHTML = `
+    <div class="withdraw_heading">
+    <h3>Withdraw</h3>
+    </div>
+
+    <form onsubmit="withdraw(); return false">
+    <label for="">Enter your amount to withdraw:</label>
+    <input type="number" id="userInputAmount"/>
+
+    <div class="note">
+    <h4>
+      <span style="color: red">Note:</span> Please Enter Amount Such
+      like That: 500, 1000, 1500, 2000 etc
+    </h4>
+    </div>
+
+    <button>withdraw</button>
+    </form>`;
     return;
   }
 
   if (userInputPin !== "5112") {
-    document.querySelector("#errorMessage").innerHTML =
-      "inCorrect Pin Number 😌";
+    document.querySelector(".errorMessage").innerHTML =
+      "<p>inCorrect Pin Number 😌</p>";
     return;
   }
 }
 
 function withdraw() {
-  let amount = document.querySelector("#userInputAmount").value;
+  let amount = +document.querySelector("#userInputAmount").value;
 
-  if (amount > cardDailyLimit) {
-    let liItem = (document.querySelector("ul").style.display = "none");
-    document.querySelector("#message").innerHTML =
-      "this machine don't have enough card Daily Limit, Please try again with small amount";
+  if (amount < 500) {
+    document.querySelector(".errorMessage1").innerHTML =
+      "<p>Please Enter Amount Greater Than 500</p>";
+  } else if (amount % 500) {
+    document.querySelector(".errorMessage1").innerHTML =
+      "<p>Please Enter Amount Such like That: 500, 1000, 1500, 2000 etc.</p>";
+  } else if (accountBalance < amount) {
+    document.querySelector(".errorMessage1").innerHTML =
+      "<p>Account Balance limit is over</p>";
+  } else if (moneyBox < amount) {
+    document.querySelector(".errorMessage1").innerHTML =
+      "<p>MoneyBox Limit is over</p>";
+  } else if (cardDailyLimit < amount) {
+    document.querySelector(".errorMessage1").innerHTML =
+      "<p>cardDailyLimit Limit is over</p>";
   } else {
-    document.querySelector("#message").innerHTML =
-      "Successfully Withdraw 👍";
+    document.querySelector(".errorMessage1").innerHTML = "";
 
-    let liItem = (document.querySelector("ul").style.display = "block");
+    moneyBox = moneyBox - amount;
+    cardDailyLimit = cardDailyLimit - amount;
+    accountBalance = accountBalance - amount;
 
-    let item1 = (document.querySelector("#item1").innerHTML =
-      "Remain Mony Box: " + (moneyBox - Number(amount)));
-    let item2 = (document.querySelector("#item2").innerHTML =
-      "Remain Card Daily Limit: " + (cardDailyLimit - Number(amount)));
-    let item3 = (document.querySelector("#item3").innerHTML =
-      "Remain Account Balance: " + (accountBalance - Number(amount)));
+    let with12 = document.querySelector(".withdraw_successfully_part");
+    with12.innerHTML = `
+    <div class="heading">
+    <h1>Withdraw successfully</h1>
+    </div>
+
+    <ul>
+      <li>
+        <p>Remain Money Box Amount is:</p>
+        <h1>${moneyBox}</h1>
+      </li>
+      <li>
+        <p>Remain Card Daily Limit is:</p>
+        <h1>${cardDailyLimit}</h1>
+      </li>
+      <li>
+        <p>Remain Account Balance is:</p>
+        <h1>${accountBalance}</h1>
+      </li>
+    </ul>`;
   }
-  // else if (amount > moneyBox) {
-  //   document.querySelector("#message").innerHTML =
-  //   "this machine don't have enough money, Please try again with small amount";
-  // }
-  // else if (amount > accountBalance) {
-  //   document.querySelector("#message").innerHTML =
-  //     "this machine don't have enough Account Balance, Please try again with small amount";
-  // }
 }
