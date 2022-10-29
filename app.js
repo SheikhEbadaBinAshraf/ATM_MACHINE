@@ -59,18 +59,23 @@ function withdraw() {
   if (amount < 500) {
     document.querySelector(".errorMessage1").innerHTML =
       "<p>Please Enter Amount Greater Than 500</p>";
+    document.querySelector(".withdraw_successfully_part").innerHTML = "";
   } else if (amount % 500) {
     document.querySelector(".errorMessage1").innerHTML =
       "<p>Please Enter Amount Such like That: 500, 1000, 1500, 2000 etc.</p>";
+    document.querySelector(".withdraw_successfully_part").innerHTML = "";
   } else if (accountBalance < amount) {
     document.querySelector(".errorMessage1").innerHTML =
       "<p>Account Balance limit is over</p>";
+    document.querySelector(".withdraw_successfully_part").innerHTML = "";
   } else if (moneyBox < amount) {
     document.querySelector(".errorMessage1").innerHTML =
       "<p>MoneyBox Limit is over</p>";
+    document.querySelector(".withdraw_successfully_part").innerHTML = "";
   } else if (cardDailyLimit < amount) {
     document.querySelector(".errorMessage1").innerHTML =
       "<p>cardDailyLimit Limit is over</p>";
+    document.querySelector(".withdraw_successfully_part").innerHTML = "";
   } else {
     document.querySelector(".errorMessage1").innerHTML = "";
 
